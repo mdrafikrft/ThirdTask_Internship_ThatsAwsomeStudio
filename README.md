@@ -1,0 +1,1 @@
+# ThirdTask_Internship_ThatsAwsomeStudio
