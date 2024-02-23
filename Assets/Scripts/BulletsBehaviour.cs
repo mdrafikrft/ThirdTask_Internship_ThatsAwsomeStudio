@@ -8,15 +8,14 @@ public class BulletsBehaviour : MonoBehaviour
 
     [SerializeField] private float bulletSpeed;
     [SerializeField] private float bulletLife;
-    [SerializeField] private Transform bulletSpawnPlace;
+    //[SerializeField] private Transform bulletSpawnPlace;
 
 
     private void Start()
-    {
+    {/*
         bulletRigidBody = GetComponent<Rigidbody>();
 
-        bulletRigidBody.AddForce(Vector3.forward.normalized * bulletSpeed, ForceMode.Impulse);
-
+        bulletRigidBody.velocity = bulletSpawnPlace.forward * bulletSpeed;*/
         Destroy(gameObject, bulletLife);
     }
 }

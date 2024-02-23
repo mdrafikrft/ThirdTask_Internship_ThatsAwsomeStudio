@@ -8,21 +8,23 @@ public class BulletShoot : MonoBehaviour
     [SerializeField] private Transform BulletPlace;
     [SerializeField] private AudioClip bulletSound;
     [SerializeField] private AudioSource gunAudio;
+    [SerializeField] private float bulletSpeed;
 
     GunController gunController;
 
     InputControl inputControl;
-
-    private void Awake()
-    {
-        inputControl = new InputControl();
-    }
 
     private void Start()
     {
         gunController = GameObject.FindGameObjectWithTag("Gun").GetComponent<GunController>();
     }
 
+    private void Awake()
+    {
+        inputControl = new InputControl();
+    }
+
+    
     private void Update()
     {
         if (inputControl.Player.Shoot.triggered)
@@ -33,8 +35,10 @@ public class BulletShoot : MonoBehaviour
     public void ShootBullet()
     {
         int RandomIndex = Random.Range(0, bullets.Length);
-        Instantiate(bullets[RandomIndex], BulletPlace.position, BulletPlace.rotation);
-        gunController.StartCoroutine("gunRecoil");
+        var bullet = Instantiate(bullets[RandomIndex], BulletPlace.position, BulletPlace.rotation);
+        bullet.GetComponent<Rigidbody>().velocity = BulletPlace.forward * bulletSpeed;
+
+        gunController.BackToDefaultPosition();
         gunAudio.PlayOneShot(bulletSound);
     }
 
