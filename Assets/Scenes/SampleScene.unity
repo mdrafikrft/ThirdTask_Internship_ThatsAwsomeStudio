@@ -1059,6 +1059,7 @@ MonoBehaviour:
   bulletSound: {fileID: 8300000, guid: cd40150762950e643a1c55ba1d9ea72f, type: 3}
   gunAudio: {fileID: 1794765940}
   bulletSpeed: 80
+  Gun: {fileID: 1998779212}
 --- !u!4 &1794765938
 Transform:
   m_ObjectHideFlags: 0

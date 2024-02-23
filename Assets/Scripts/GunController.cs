@@ -53,9 +53,10 @@ public class GunController : MonoBehaviour
 
     public void BackToDefaultPosition()
     {
-        transform.localPosition = gunDefaultPosition;
+        transform.localPosition = Vector3.Slerp(transform.localPosition, gunDefaultPosition, 0.01f);
         transform.localRotation = Quaternion.Euler(0, -97.6f, 0);
         canMove = false;
-
     }
+
+    
 }
