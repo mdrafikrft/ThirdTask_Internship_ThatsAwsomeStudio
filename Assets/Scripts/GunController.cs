@@ -4,7 +4,8 @@ using System.Collections;
 
 public class GunController : MonoBehaviour
 {
-    [SerializeField] Vector3 gunDefaultPosition;
+    public Vector3 gunDefaultPosition;
+
     float zAngle;
     float back;
     bool move = true;
@@ -22,14 +23,16 @@ public class GunController : MonoBehaviour
         {
             down();
         }
+
+        Debug.Log("x = " + transform.position.x + "    y = " + transform.position.y + "   z = " + transform.position.z);
     }
 
     private void up()
     {
         zAngle += 0.5f;
         zAngle = Mathf.Clamp(zAngle, -40, 70);
-        transform.localRotation = Quaternion.Euler(0, -97.6f, zAngle);
-        Debug.Log(zAngle);
+        transform.localRotation = Quaternion.Euler(0, -97.6f, zAngle);/*
+        Debug.Log(zAngle);*/
         if(zAngle == 70)
         {
             back = 70;
@@ -53,10 +56,17 @@ public class GunController : MonoBehaviour
 
     public void BackToDefaultPosition()
     {
-        transform.localPosition = Vector3.Slerp(transform.localPosition, gunDefaultPosition, 0.01f);
-        transform.localRotation = Quaternion.Euler(0, -97.6f, 0);
+        transform.localPosition = gunDefaultPosition;
+        transform.localRotation = Quaternion.Euler(0, -97.6f, 3.80f);
+              
         canMove = false;
+
+        StartCoroutine("resetMove");
     }
 
-    
+    IEnumerator resetMove()
+    {
+        yield return new WaitForSeconds(3.0f);
+        canMove = true;
+    }
 }

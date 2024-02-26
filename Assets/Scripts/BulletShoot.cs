@@ -14,12 +14,14 @@ public class BulletShoot : MonoBehaviour
     [SerializeField] private GameObject Gun;
 
     GunController gunController;
+    Vector3 defaultGunPosition; 
 
     InputControl inputControl;
 
     private void Start()
     {
         gunController = GameObject.FindGameObjectWithTag("Gun").GetComponent<GunController>();
+        defaultGunPosition = gunController.gunDefaultPosition;
     }
 
     private void Awake()
@@ -50,15 +52,17 @@ public class BulletShoot : MonoBehaviour
 
     IEnumerator GunRecoil()
     {
-        float z = Gun.transform.position.z - 0.20f;
-        Debug.Log("Z = " + z);
-        Vector3 targetPos = new Vector3(Gun.transform.position.x, Gun.transform.position.y, z);
-        Gun.transform.position = Vector3.Slerp(Gun.transform.position, targetPos, 0.2f);
+        float z = Gun.transform.position.z - 0.20f;/*
+        Debug.Log("Z = " + z);*/
+        z = Mathf.Clamp(z, 0.321f, 0.521f);
+        Vector3 targetPos = new Vector3(defaultGunPosition.x, defaultGunPosition.y, z);
+        Gun.transform.localPosition = Vector3.Slerp(defaultGunPosition, targetPos, 0.2f);
 
         yield return new WaitForSeconds(0.1f);
 
         z += 0.20f;
-        Gun.transform.position = new Vector3(Gun.transform.position.x, Gun.transform.position.y, z);
+        z = Mathf.Clamp(z, 0.521f, 0.621f);
+        Gun.transform.localPosition = new Vector3(defaultGunPosition.x, defaultGunPosition.y, z);
         //Gun.transform.position = Vector3.Slerp(Gun.transform.position, originalPosition, 0.1f);
     }
 
