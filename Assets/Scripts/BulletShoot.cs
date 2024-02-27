@@ -32,22 +32,30 @@ public class BulletShoot : MonoBehaviour
     
     private void Update()
     {
+        CheckInput();
+    }
+
+    private void CheckInput()
+    {
         if (inputControl.Player.Shoot.triggered)
         {
+            GunController.canReset = false;
             ShootBullet();
-        }  
+        }
     }
     public void ShootBullet()
     {
         //Gun Recoil
-        StartCoroutine("GunRecoil");
+        StartCoroutine(GunRecoil());
 
         int RandomIndex = Random.Range(0, bullets.Length);
         var bullet = Instantiate(bullets[RandomIndex], BulletPlace.position, BulletPlace.rotation);
         bullet.GetComponent<Rigidbody>().velocity = BulletPlace.forward * bulletSpeed;
 
-        gunController.BackToDefaultPosition();
         gunAudio.PlayOneShot(bulletSound);
+
+        gunController.BackToDefaultPosition();
+        GunController.resetTime = 2;
     }
 
     IEnumerator GunRecoil()
@@ -75,6 +83,7 @@ public class BulletShoot : MonoBehaviour
     {
         inputControl.Disable();
     }
+
 
 
 }

@@ -11,6 +11,9 @@ public class GunController : MonoBehaviour
     bool move = true;
     bool canMove = true;
 
+    public static int resetTime;
+    public static bool canReset;
+
     
     private void Update()
     {
@@ -24,7 +27,6 @@ public class GunController : MonoBehaviour
             down();
         }
 
-        Debug.Log("x = " + transform.position.x + "    y = " + transform.position.y + "   z = " + transform.position.z);
     }
 
     private void up()
@@ -57,16 +59,20 @@ public class GunController : MonoBehaviour
     public void BackToDefaultPosition()
     {
         transform.localPosition = gunDefaultPosition;
-        transform.localRotation = Quaternion.Euler(0, -97.6f, 3.80f);
+        transform.localRotation = Quaternion.Euler(0, -92.0f, 3.80f);
               
         canMove = false;
 
-        StartCoroutine("resetMove");
+        //StartCoroutine(ResetMove());
+        if (canReset)
+        {
+            Invoke("ResetMove", resetTime);
+        }
     }
 
-    IEnumerator resetMove()
+    public void ResetMove()
     {
-        yield return new WaitForSeconds(3.0f);
+        //yield return new WaitForSeconds(4.0f);
         canMove = true;
     }
 }
